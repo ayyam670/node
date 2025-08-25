@@ -1,0 +1,36 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "json-server test",
+      "author": "typicode"
+    },
+    {
+      "id": "2",
+      "title": "server update222",
+      "author": "user01"
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "body": "test commet",
+      "postId": 1
+    },
+    {
+      "id": "2",
+      "body": "second comments",
+      "postId": 1
+    },
+    {
+      "id": "3",
+      "body": "second comments for postId: 2",
+      "postId": 2
+    },
+    {
+      "id": "4",
+      "body": "second comments for postId: 2",
+      "postId": 2
+    }
+  ]
+}
