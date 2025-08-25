@@ -13,6 +13,16 @@ app.get("/start", (req, resp)=>
   resp.send("/start 경로 호출됨.");
 });
 
+app.get("/json", (req, resp)=>
+{
+  resp.send({id: "user01", pw: "1111"});
+});
+
+app.post("/main", (req,resp) =>
+{
+  resp.send("/main 경로를 post 요청방식으로 호출함");
+});
+
 // 서버스타트
 app.listen(3000, () =>
 {
