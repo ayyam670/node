@@ -60,6 +60,8 @@ app.post("/mail", (req, resp) =>
   resp.send("done");
 });
 
+// "/excel_down" => customers 테이블의 데이터를 logs/customer2.xlsx 로 저장.
+
 app.listen(3000, () =>
 {
   console.log("http://localhost:3000");

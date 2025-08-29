@@ -2,7 +2,9 @@
 const express = require("express");
 const parser = require("body-parser");
 const sql = require("./sql");
+const prodSql = require("./sql/sql");  // {productList:{query:``}, productList2:{query:``}, productDetail:{query:``}} query 구문을 가져오려고 하는것
 
+//console.log(prodSql["productDetail"].query);
 
 const app = express();
 app.use(parser. urlencoded()); // x-www-form-urlencoded
@@ -13,6 +15,25 @@ app.get("/", (req, resp) =>
 {
   resp.send("/실행");
 });
+
+// 상품쿼리.
+app.post("/api/:alias", async(req, resp) =>   // api?alias=~~~~~~~~~
+{
+  //console.log(prodSql[req.params.alias].query);
+  let search = prodSql[req.params.alias].query;    // alias:productDetail
+  let param = req.body.param;  // [{product_id:9, type:1, path:test.jpg}]        param:[2] ? 가 하나라서 param 하나만 있으면됨
+  try{
+  let result = await sql.execute(search, param);
+  //console.log(result);
+  resp.json(result); // 웹페이지에 출력
+  }
+  catch(err)
+  {
+    console.log(err);
+    resp.json({retCode: "Error"});
+  }
+});
+
 
 // 고객목록.
 app.get("/customers", async(req, resp) =>
