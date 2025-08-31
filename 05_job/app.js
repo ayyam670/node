@@ -12,14 +12,11 @@ const app = express();
 app.use(express.urlencoded());
 
 // 라우팅.
-app.get("/", (req,resp) =>
-{
+app.get("/", (req, resp) => {
   resp.send("/");
 });
-app.get("/mail", (req, resp) =>
-{
-  resp.send
-  (`<form action="mail" method="post">
+app.get("/mail", (req, resp) => {
+  resp.send(`<form action="mail" method="post">
     <table>
       <tr>
         <th>보내는이:</th>
@@ -46,23 +43,35 @@ app.get("/mail", (req, resp) =>
   </form>`);
 });
 
-app.post("/mail", (req, resp) => 
-{
-  console.log(req.body);
-  let data = 
-  {
+// app.post("/mail", (req, resp) =>
+// {
+//   console.log(req.body);
+//   let data =
+//   {
+//     from: req.body.sender,
+//     to: req.body.receiver,
+//     subject: req.body.subject,
+//     text: req.body.content
+//   }  // from, to, subject, text(html)
+//   nodemail.mailSend(data);
+//   resp.send("done");
+// });
+
+app.post("/mail", async (req, resp) => {
+  let data = {
     from: req.body.sender,
     to: req.body.receiver,
     subject: req.body.subject,
-    text: req.body.content
-  }  // from, to, subject, text(html)
-  nodemail.mailSend(data);
-  resp.send("done");
+    html: "<div>" + req.body.content.replace(/\n/g, "<br>") + "</div>",
+  }; // from, to, subject, text(html)
+  let result = "Done";
+  result = await nodemail.mailSend(data);
+  resp.send(result);
 });
 
 // "/excel_down" => customers 테이블의 데이터를 logs/customer2.xlsx 로 저장.
+app.get("/excel_down", (req, resp) => {});
 
-app.listen(3000, () =>
-{
+app.listen(3000, () => {
   console.log("http://localhost:3000");
 });
